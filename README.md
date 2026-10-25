@@ -416,6 +416,14 @@ Edit `tools/scrape_multi_portal_24h_jobs.py`:
 - `EXPERIENCE_LEVEL`: Adjust years of experience.
 
 ---
+
+## Author & Acknowledgements
+
+- **Author & Maintainer**: [Anup Kumar Mahata](https://github.com/anupkumarmahata123)
+- **License**: MIT License - see [LICENSE](LICENSE) for details.
+- **Architecture**: Powered natively by **Google Antigravity & Google Gemini**.
+- **Inspiration**: Adapted from open-source job application patterns and custom-built for automated multi-portal Indian tech career workflows.
+
 ---
 
 <p align="center">
