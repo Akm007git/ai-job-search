@@ -325,9 +325,6 @@ ai-job-search/
 ├── CLAUDE.md                          # Compatibility runner profile for Claude Code
 ├── README.md                          # Comprehensive project documentation
 ├── SETUP.md                           # Detailed step-by-step setup guide
-├── SECURITY.md                        # Security model & prompt-injection defense documentation
-├── CONTRIBUTING.md                    # Guidelines for contributing new portal skills & templates
-├── LICENSE                            # MIT License
 ├── .env.example                       # Template for email & credentials configuration
 ├── .gitignore                         # Protects personal documents, compiled PDFs, and credentials
 │
@@ -419,9 +416,9 @@ Edit `tools/scrape_multi_portal_24h_jobs.py`:
 
 ## Author & Acknowledgements
 
-- **Author & Maintainer**: [Anup Kumar Mahata](https://github.com/anupkumarmahata123)
+- **Author & Maintainer**: [Anup Kumar Mahata](https://github.com/Akm007git)
 - **Architecture**: Powered natively by **Google Antigravity & Google Gemini**.
-- **Inspiration**: Adapted from open-source job application patterns and custom-built for automated multi-portal Indian tech career workflows.
+- **Inspiration**: Custom-built for automated multi-portal Indian tech career workflows.
 
 ---
 
