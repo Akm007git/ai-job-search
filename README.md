@@ -10,10 +10,6 @@
   <a href="https://trendshift.io/repositories/43622?utm_source=trendshift-badge&amp;utm_medium=badge&amp;utm_campaign=badge-trendshift-43622" target="_blank" rel="noopener noreferrer"><img src="https://trendshift.io/api/badge/trendshift/repositories/43622/daily" alt="Trendshift badge" width="250" height="55"/></a>
 </p>
 
-[![CI](https://github.com/MadsLorentzen/ai-job-search/actions/workflows/ci.yml/badge.svg)](https://github.com/MadsLorentzen/ai-job-search/actions/workflows/ci.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Google Antigravity & Gemini](https://img.shields.io/badge/Powered%20By-Google%20Antigravity%20%26%20Gemini-4285F4)](https://github.com/google)
-
 An enterprise-grade, agentic job application assistant built natively for **[Google Antigravity](https://github.com/google)** and powered by **Google Gemini** (with multi-agent support for Claude Code). 
 
 > **100% Free & Open-Source**: You do **not** need a paid Claude Code subscription to use this repository! Anyone on GitHub can clone this workspace, connect it freely to **Google Gemini** inside the **Google Antigravity IDE**, and automate their entire job search pipeline:
@@ -422,14 +418,6 @@ Edit `tools/scrape_multi_portal_24h_jobs.py`:
 - `EXPERIENCE_LEVEL`: Adjust years of experience.
 
 ---
-
-## License & Acknowledgements
-
-- **License**: MIT License - see [LICENSE](LICENSE) for details.
-- **Original Framework Author**: [Mads Lorentzen](https://github.com/MadsLorentzen) for the groundbreaking job search methodology.
-- **CLI Tools**: [Mikkel Krogholm](https://github.com/mikkelkrogsholm) for job search CLI skills.
-- **Antigravity & Gemini Adaptation**: Optimized by the Google DeepMind Antigravity community for autonomous, multi-agent AI pair programming.
-
 ---
 
 <p align="center">
