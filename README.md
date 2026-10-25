@@ -7,6 +7,7 @@
 *The intelligent, autonomous job application framework that runs locally on your machine.*
 
 
+
 An enterprise-grade, agentic job application assistant built natively for **[Google Antigravity](https://github.com/google)** and powered by **Google Gemini** (with multi-agent support for Claude Code). 
 
 > **100% Free & Open-Source**: You do **not** need a paid Claude Code subscription to use this repository! Anyone on GitHub can clone this workspace, connect it freely to **Google Gemini** inside the **Google Antigravity IDE**, and automate their entire job search pipeline:
