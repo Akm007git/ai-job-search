@@ -6,9 +6,6 @@
 
 *The intelligent, autonomous job application framework that runs locally on your machine.*
 
-<p align="center">
-  <a href="https://trendshift.io/repositories/43622?utm_source=trendshift-badge&amp;utm_medium=badge&amp;utm_campaign=badge-trendshift-43622" target="_blank" rel="noopener noreferrer"><img src="https://trendshift.io/api/badge/trendshift/repositories/43622/daily" alt="Trendshift badge" width="250" height="55"/></a>
-</p>
 
 An enterprise-grade, agentic job application assistant built natively for **[Google Antigravity](https://github.com/google)** and powered by **Google Gemini** (with multi-agent support for Claude Code). 
 
