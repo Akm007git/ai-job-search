@@ -16,6 +16,7 @@ import os
 import smtplib
 import subprocess
 import sys
+import time
 from email import encoders
 from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
@@ -277,20 +278,38 @@ def send_email(html_content: str, attachment_path: Path) -> bool:
         msg.attach(part)
         print(f"  -> Attached: {attachment_path.name}")
 
-    print(f"Connecting to SMTP server {SMTP_HOST}:{SMTP_PORT} as {EMAIL_FROM}...")
-    try:
-        server = smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=20)
-        server.ehlo()
-        server.starttls()
-        server.ehlo()
-        server.login(EMAIL_FROM, SMTP_PASSWORD)
-        server.sendmail(EMAIL_FROM, [EMAIL_TO], msg.as_string())
-        server.quit()
-        print(f"[OK] Daily Job Digest successfully sent to {EMAIL_TO}!")
-        return True
-    except Exception as e:
-        print(f"[FAIL] Error sending email: {e}", file=sys.stderr)
-        return False
+    current_host = SMTP_HOST
+    current_port = SMTP_PORT
+    max_retries = 4
+
+    for attempt in range(1, max_retries + 1):
+        print(f"Connecting to SMTP server {current_host}:{current_port} as {EMAIL_FROM} (attempt {attempt}/{max_retries})...")
+        try:
+            if current_port == 465:
+                server = smtplib.SMTP_SSL(current_host, current_port, timeout=30)
+            else:
+                server = smtplib.SMTP(current_host, current_port, timeout=30)
+                server.ehlo()
+                server.starttls()
+            server.ehlo()
+            server.login(EMAIL_FROM, SMTP_PASSWORD)
+            server.sendmail(EMAIL_FROM, [EMAIL_TO], msg.as_string())
+            server.quit()
+            print(f"[OK] Daily Job Digest successfully sent to {EMAIL_TO}!")
+            return True
+        except Exception as e:
+            print(f"[!] Attempt {attempt} failed: {e}", file=sys.stderr)
+            if attempt < max_retries:
+                wait_sec = attempt * 5
+                print(f"    Retrying in {wait_sec}s (handling potential network/wake latency)...", file=sys.stderr)
+                time.sleep(wait_sec)
+                # If Gmail on port 587 hits connection reset, fallback to port 465 SSL on later attempts
+                if "gmail.com" in current_host and current_port == 587 and attempt >= 2:
+                    print("    Switching to alternate Gmail SSL port 465 for next retry...", file=sys.stderr)
+                    current_port = 465
+
+    print(f"[FAIL] All {max_retries} email delivery attempts failed.", file=sys.stderr)
+    return False
 
 def send_test_email() -> bool:
     """Send a lightweight verification email to test SMTP settings."""
