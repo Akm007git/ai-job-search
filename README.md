@@ -67,7 +67,7 @@ An enterprise-grade, agentic job application assistant built natively for **[Goo
 - Displays the **Top 10 High-Priority Postings** with instant 1-click **Apply on LinkedIn** buttons.
 - Features interactive **Naukri 24h Live Hub** buttons to open live searches in one click.
 - Attaches the complete `jobs_multi_portal_bangalore_kolkata_last_24h.xlsx` workbook directly to your inbox so you can review and apply on the go from your phone or desktop.
-- Includes a 1-click setup script for macOS `launchd` or Unix `cron` (runs automatically twice daily: **10:00 AM Morning Digest** and **8:00 PM Evening Application Reminder**).
+- Runs twice daily (**10:00 AM Morning Digest** and **8:00 PM Evening Application Reminder**) either via **GitHub Actions in the cloud (runs even when your computer is off, 100% free)** or via local background services.
 
 ### 3. Autonomous 1-Command Tailoring (`/apply <url-or-text>`)
 - Paste any job URL or raw text description.
@@ -225,11 +225,24 @@ python3 tools/send_daily_job_email.py --run-scraper
 
 ### 4. Enable Daily Automated Schedule (10:00 AM & 8:00 PM Every Day)
 
-Run the schedule installer:
+You can run your daily job search automation in two ways:
+
+#### Option A: Cloud Automation via GitHub Actions (Recommended — Runs Even If Laptop is Switched Off)
+A built-in GitHub Actions workflow (`.github/workflows/daily_job_search.yml`) runs automatically at **10:00 AM IST** (morning digest) and **8:00 PM IST** (evening reminder). It scrapes the portals, generates the Excel workbook, and delivers the email completely in the cloud for free ($0).
+
+1. Go to your repository on GitHub: **Settings > Secrets and variables > Actions**.
+2. Click **New repository secret** and add:
+   - `GMAIL_ADDRESS`: Your personal Gmail address (e.g. `your.email@gmail.com`)
+   - `GMAIL_APP_PASSWORD`: Your 16-character Google App Password (from [Google App Passwords](https://myaccount.google.com/apppasswords))
+   - `RECEIVER_EMAIL`: Your personal recipient email (e.g. `your.email@gmail.com`)
+3. Done! GitHub Actions will run on schedule twice daily. You can also trigger it manually at any time under the **Actions** tab by selecting **Daily Job Search & Email Dispatch** and clicking **Run workflow**.
+
+#### Option B: Local Background Scheduling (Runs when Mac/PC is awake)
+If you prefer running it locally on your computer:
 ```bash
 python3 tools/setup_daily_schedule.py --times 10:00,20:00
 ```
-- On **macOS**, this installs a native `launchd` background job (`com.aijobsearch.dailyreport.plist`) that fires at **10:00 AM** (morning digest) and **8:00 PM** (evening reminder).
+- On **macOS**, this installs a native `launchd` background job (`com.aijobsearch.dailyreport.plist`) that fires at **10:00 AM** and **8:00 PM**.
 - On **Linux**, this installs standard `cron` entries (`0 10,20 * * *`).
 
 ---
@@ -320,11 +333,12 @@ Here is a complete breakdown of every file and directory in this workspace:
 
 ```
 ai-job-search/
+├── .github/workflows/
+│   └── daily_job_search.yml           # GitHub Actions automated cloud workflow (10 AM & 8 PM IST)
 ├── GEMINI.md                          # Master candidate profile & workflow rules for Google Antigravity & Gemini
 ├── AGENTS.md                          # Multi-agent thin-pointer architecture definition
 ├── CLAUDE.md                          # Compatibility runner profile for Claude Code
 ├── README.md                          # Comprehensive project documentation
-├── SETUP.md                           # Detailed step-by-step setup guide
 ├── .env.example                       # Template for email & credentials configuration
 ├── .gitignore                         # Protects personal documents, compiled PDFs, and credentials
 │
