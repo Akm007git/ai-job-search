@@ -81,8 +81,8 @@ An enterprise-grade, agentic job application assistant built natively for **[Goo
 
 ### 4. Salary Benchmark & Offer Hike Calculator
 - Pre-calibrated for Indian Tech & Generative AI benchmarks (Bangalore & Kolkata).
-- **Candidate Baseline**: Current CTC: **11.0 LPA** (Specialist Programmer – GenAI at Infosys).
-- **Target Expectations**: Expected CTC: **17.0 – 18.0+ LPA** (+54.5% to +63.6% hike).
+- **Candidate Baseline**: Current CTC: ** <LPA>** (Specialist Programmer – GenAI at Infosys).
+- **Target Expectations**: Expected CTC: **18.0 – 200+ LPA** (+54.5% to +63.6% hike).
 - Run `python salary_lookup.py "<Company>"` to view salary distributions.
 - Run `python salary_lookup.py --calc <offered_LPA>` to get an instant hike breakdown, monthly gross delta, and negotiation verdict.
 
