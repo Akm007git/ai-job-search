@@ -1,0 +1,64 @@
+name: Daily Job Search & Email Dispatch
+
+on:
+  schedule:
+    # 04:30 UTC = 10:00 AM IST
+    # 14:30 UTC = 08:00 PM IST (20:00 IST)
+    - cron: '30 4,14 * * *'
+  workflow_dispatch: # Allows manual trigger anytime from the GitHub Actions tab
+
+concurrency:
+  group: daily-job-search
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  job-search-and-email:
+    name: Scrape 24h Jobs & Send Email Digest
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install openpyxl
+
+      - name: Set up Bun runtime
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install Portal CLIs
+        run: |
+          python tools/install_portal_clis.py
+
+      - name: Scrape 24h Jobs and Send Email Digest
+        env:
+          GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          RECEIVER_EMAIL: ${{ secrets.RECEIVER_EMAIL || secrets.GMAIL_ADDRESS }}
+          SENDER_EMAIL: ${{ secrets.GMAIL_ADDRESS }}
+          SMTP_HOST: smtp.gmail.com
+          SMTP_PORT: 587
+        run: |
+          python tools/send_daily_job_email.py --run-scraper
+
+      - name: Upload Excel Workbook as Artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: daily-job-listings
+          path: |
+            jobs_multi_portal_bangalore_kolkata_last_24h.xlsx
+            jobs_multi_portal_bangalore_kolkata_last_24h.csv
+            email_daily_digest.html
+          retention-days: 7

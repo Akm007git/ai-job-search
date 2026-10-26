@@ -55,7 +55,7 @@ else:
 
 SMTP_HOST = os.environ.get("SMTP_HOST", default_host)
 SMTP_PORT = int(os.environ.get("SMTP_PORT", "587"))
-SMTP_PASSWORD = os.environ.get("GMAIL_APP_PASSWORD") or os.environ.get("SMTP_PASSWORD") or ""
+SMTP_PASSWORD = (os.environ.get("GMAIL_APP_PASSWORD") or os.environ.get("SMTP_PASSWORD") or "").replace(" ", "")
 
 NAUKRI_LINKS = [
     ("AI Engineer - Bangalore (2+ YoE, 24h)", "https://www.naukri.com/ai-engineer-jobs-in-bangalore?experience=2&jobAge=1"),
