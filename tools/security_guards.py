@@ -54,8 +54,7 @@ errors: list[str] = []
 # an entry must add it here too - that is the point: the diff shows both.
 ALLOWED_PERMISSIONS = {
     "Skill(job-application-assistant)",
-    # Narrowed from the upstream template's blanket Bash(bun run:*), which
-    # pre-approved `bun run <any file>`. One entry per shipped portal CLI,
+    # Explicit CLI commands instead of blanket Bash(bun run:*). One entry per shipped portal CLI,
     # matching what each SKILL.md already declares in its allowed-tools.
     # A portal added by /add-portal needs its own entry here and in
     # .claude/settings.json - that review step is the point.

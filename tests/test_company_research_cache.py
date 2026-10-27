@@ -119,8 +119,7 @@ class TestApplyWiring(unittest.TestCase):
 
     def test_reviewer_prompt_restates_verification_still_applies_to_a_cache_hit(self):
         """New one-line restatement inside the cache-check paragraph itself, distinct
-        from the grounding-audit rule elsewhere in the prompt - Mads flagged this as
-        the one part of the cache wiring with no dedicated pin (PR #349 follow-up)."""
+        from the grounding-audit rule elsewhere in the prompt."""
         body = _apply_research_step()
         self.assertRegex(
             body,
@@ -162,8 +161,7 @@ class TestInterviewWiring(unittest.TestCase):
     def test_step_2_cache_paragraph_restates_verification_still_applies(self):
         """New one-line restatement inside the cache-check paragraph itself - distinct
         from test_step_2_still_requires_verification_before_using_a_claim above, which
-        pins the older, pre-existing 'Verify before using' rule further down. Mads
-        flagged this new one-liner as unpinned (PR #349 follow-up)."""
+        pins the older, pre-existing 'Verify before using' rule further down."""
         body = _interview_research_step()
         self.assertRegex(
             body,

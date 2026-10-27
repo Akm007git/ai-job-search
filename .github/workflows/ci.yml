@@ -1,11 +1,4 @@
-# CI for the framework itself: LaTeX smoke compiles, skill/command lint,
-# CLI typechecks, and (upstream only) placeholder integrity.
-#
-# Fork-friendly by design: forks personalize CLAUDE.md, the skill files, and
-# cv/main_example.tex via /setup, so the placeholder-integrity job and the
-# exact page-count/content assertions run only on the upstream template repo.
-# Compile success, lint correctness, and an extractable PDF text layer are
-# asserted everywhere.
+# CI: LaTeX smoke compiles, skill/command lint, and CLI typechecks.
 #
 # Deliberately NOT here: live smoke tests of the job-portal CLIs. They hit
 # real portals (network-flaky, and the linkedin-search skill is personal-use
@@ -49,9 +42,6 @@ jobs:
           python-version: "3.12"
       - run: pip install pyyaml
       - run: python tools/lint_skills.py
-      - name: Framework version guard (upstream template only)
-        if: github.repository == 'MadsLorentzen/ai-job-search'
-        run: python tools/check_framework_version.py
 
   security-guards:
     name: Security guards (permissions, gitignore, manifests)
@@ -202,19 +192,7 @@ jobs:
         run: |
           python3 tools/verify_pdf.py cv/main_example.pdf --min-chars 100
           python3 tools/verify_pdf.py cover_letters/cover_example.pdf --min-chars 100
-      - name: Assert stock PDF structure (upstream template only)
-        if: github.repository == 'MadsLorentzen/ai-job-search'
-        run: |
-          python3 tools/verify_pdf.py cv/main_example.pdf \
-            --pages 2 \
-            --ascii-dates \
-            --contains '[your.email@example.com]' \
-            --contains 'Professional Experience' \
-            --contains 'Achievement'
-          python3 tools/verify_pdf.py cover_letters/cover_example.pdf \
-            --pages 1 \
-            --contains 'your.email@example.com' \
-            --contains 'Dear [Hiring Manager / Team]'
+
 
   discover-clis:
     # The matrix is discovered, not hardcoded, so a portal CLI added in a fork
@@ -267,27 +245,4 @@ jobs:
           fi
         working-directory: .agents/skills/${{ matrix.tool }}/cli
 
-  placeholder-integrity:
-    name: Placeholder integrity (upstream template only)
-    if: github.repository == 'MadsLorentzen/ai-job-search'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
-        with:
-          persist-credentials: false
-      - name: Tracked template files must keep their placeholder tokens
-        run: |
-          fail=0
-          check() {
-            if ! grep -q "$2" "$1"; then
-              echo "::error file=$1::expected placeholder token $2 - personal data may have been committed"
-              fail=1
-            fi
-          }
-          check CLAUDE.md '\[YOUR_NAME\]'
-          check cv/main_example.tex '\\name{\[First\]}{\[Last\]}'
-          check cv/main_example.tex '\\email{\[your\.email@example\.com\]}'
-          check cover_letters/cover_example.tex '\[YOUR NAME\]'
-          check .claude/skills/job-application-assistant/01-candidate-profile.md '\[YOUR_EMAIL\]'
-          check .claude/skills/job-application-assistant/04-job-evaluation.md '\[YOUR_PRIMARY_SKILLS\]'
-          exit $fail
+
