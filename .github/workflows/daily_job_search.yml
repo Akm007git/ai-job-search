@@ -2,9 +2,10 @@ name: Daily Job Search & Email Dispatch
 
 on:
   schedule:
-    # 04:30 UTC = 10:00 AM IST
-    # 14:30 UTC = 08:00 PM IST (20:00 IST)
-    - cron: '30 4,14 * * *'
+    # 04:30 UTC = 10:00 AM IST (Morning Digest)
+    - cron: '30 4 * * *'
+    # 14:30 UTC = 08:00 PM IST (Evening Digest)
+    - cron: '30 14 * * *'
   workflow_dispatch: # Allows manual trigger anytime from the GitHub Actions tab
 
 concurrency:
