@@ -4,6 +4,13 @@ All notable changes to the AI Job Search & Application Assistant (Antigravity & 
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-10-29
+
+### Changed
+- **Automated Cloud Scheduling**: Streamlined daily job search workflow (`.github/workflows/daily_job_search.yml`) exclusively to GitHub Actions cloud runners for 10:00 AM IST and 8:00 PM IST dispatch.
+- **Local Scheduling Deprecation**: Uninstalled local background `launchd` service on macOS to eliminate wake-up duplicate email triggers.
+- **Codebase & Workflow Refinement**: Hardened GitHub Actions checkout security (`persist-credentials: false`), removed all obsolete template sync files, and cleaned workflow configurations.
+
 ## [1.0.0] - 2026-10-25
 
 ### Added

@@ -237,13 +237,18 @@ A built-in GitHub Actions workflow (`.github/workflows/daily_job_search.yml`) ru
    - `RECEIVER_EMAIL`: Your personal recipient email (e.g. `your.email@gmail.com`)
 3. Done! GitHub Actions will run on schedule twice daily. You can also trigger it manually at any time under the **Actions** tab by selecting **Daily Job Search & Email Dispatch** and clicking **Run workflow**.
 
-#### Option B: Local Background Scheduling (Runs when Mac/PC is awake)
-If you prefer running it locally on your computer:
+#### Option B: Local Background Scheduling (Optional)
+If you prefer running it locally on your computer instead of the cloud:
 ```bash
 python3 tools/setup_daily_schedule.py --times 10:00,20:00
 ```
 - On **macOS**, this installs a native `launchd` background job (`com.aijobsearch.dailyreport.plist`) that fires at **10:00 AM** and **8:00 PM**.
 - On **Linux**, this installs standard `cron` entries (`0 10,20 * * *`).
+- To check status or uninstall the local service:
+```bash
+python3 tools/setup_daily_schedule.py --status
+python3 tools/setup_daily_schedule.py --uninstall
+```
 
 ---
 
